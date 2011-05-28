@@ -1,0 +1,11 @@
+User roles:
+-Admin - A Mochi admin
+-Client - A salon patron
+
+INSTALL
+-Setup your Mailchimp API key
+-Setup your Mochi API key
+
+SYNC
+-Subscribe all new clients to Mailchimp
+--Return any duplicates, invalids, or unsubscribers
