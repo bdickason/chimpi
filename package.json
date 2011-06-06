@@ -1,0 +1,11 @@
+{
+	"name": "chimpi",
+	"version": "0.1",
+	"dependencies": {
+		"express": "2.3.10",
+		"mongoose": "1.0",
+		"coffee-script": "1.1.1",
+		"jade": "0.12.1"
+	}
+	
+}
