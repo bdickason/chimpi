@@ -1,9 +1,6 @@
+var http = require('http');
 var express = require('express');
 var app = express.createServer();
-
-// var config = require('./config/chimpi.js');    // Contains API keys, etc
-
-
 
 app.configure(function(){    
     app.set('views', __dirname + '/views');
@@ -17,6 +14,7 @@ app.configure(function(){
 
 var Users = new (require('./models/user').Users);
 
+/*
 // Add a user
 app.get('/users/add/:id?', function(req, res) {
     var id = req.params.id;
@@ -26,8 +24,8 @@ app.get('/users/add/:id?', function(req, res) {
         res.send('Sorry you didn\'t pass an ID.');
     }
 });
-
-// Show a specific user by ID
+*/
+/* Show a specific user by ID
 app.get('/users/:id?', function(req, res, next){
     var id = req.params.id;
     if (id) {
@@ -37,16 +35,13 @@ app.get('/users/:id?', function(req, res, next){
     }
 }); 
 
+*/
 // Show all users
 app.get('/users', function(req, res){
-    Users.findAll(function(error, users) {
-        res.render('index.html', {
-            locals: {
-                pageTitle: 'View All Users',
-                users: users
-            }
-        });
-    });
+
+var mochi_req = require('./controllers/mochi.js');
+res.send(mochi_req.awesome);
+
 }); 
 
 app.listen(3000);
