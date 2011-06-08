@@ -1,6 +1,7 @@
 var http = require('http');
 var express = require('express');
 var app = express.createServer();
+var Mochi = new (require('./controllers/mochi.js').Mochi);
 
 app.configure(function(){    
     app.set('views', __dirname + '/views');
@@ -16,7 +17,7 @@ var Users = new (require('./models/user').Users);
 
 /*
 // Add a user
-app.get('/users/add/:id?', function(req, res) {
+app.post('/users/add', function(req, res) {
     var id = req.params.id;
     if (id) {
         res.send('Adding user with ID:' + id);
@@ -38,10 +39,9 @@ app.get('/users/:id?', function(req, res, next){
 */
 // Show all users
 app.get('/users', function(req, res){
-
-var mochi_req = require('./controllers/mochi.js');
-res.send(mochi_req.awesome);
-
+	Mochi.getUsers(function(json) {
+		res.send(json);
+	});
 }); 
 
 app.listen(3000);

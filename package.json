@@ -1,6 +1,6 @@
 {
 	"name": "chimpi",
-	"version": "0.1",
+	"version": "0.0.1",
 	"dependencies": {
 		"express": "2.3.10",
 		"mongoose": "1.0",
