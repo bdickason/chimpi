@@ -44,13 +44,19 @@ app.get('/users/email/:email?', function(req, res) {
 });
 
 
-// Add a user to Chimpi
-app.get('/users/add/:email?', function(req, res) {
-    var email = req.params.email;
-    if(email) {
-        Users.add(email, function(json) {
-            res.send(json);
+// Add a user to Chimpi from Mochi
+app.get('/users/add/:uid?', function(req, res) {
+    var uid = req.params.uid;
+    if(uid) {
+        Mochi.getUserByUid(uid, function(mochi_json) {
+            Users.add(mochi_json, function(json) {
+                res.send(json);
+            }); 
         });
+        
+    }
+    else {
+        res.send("Please enter a valid Mochi ID (e.g. '1')");
     }
 });
 
@@ -75,7 +81,8 @@ app.get('/compare', function(req, res) {
 // Show all Mochi users
 app.get('/users/mochi', function(req, res) {
 	Mochi.getUsers(function(json) {
-		res.send(json);
+		res.write(json);
+		res.end();
 	});
 });
 

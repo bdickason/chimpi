@@ -10,6 +10,7 @@ var Stylist = new Schema({
 
 
 var User = new Schema({
+    mochi_uid   : { type: Number, required: true, unique: true },
 	email 		: { type: String, required: true, unique: true },
 	firstname	: { type: String },
 	lastname	: { type: String },
@@ -50,18 +51,29 @@ Users.prototype.findByEmail = function (email, callback) {
   });
 };
 
-// Create a test user
-Users.prototype.add = function (email, callback) {
-  myUser = new User({ 
-      'email': email,
-      'firstname': 'Jane',
-      'lastname': 'Doe',
-      'date_added': new Date().getTime(),
-      'active': '1'
+// take mochi user json and stick it into mongo
+Users.prototype.add = function (mochi_json, callback) {
+    // Split first + last names, only go once to prevent:  [Nick, Van, Dusseldorfer]
+    console.log(mochi_json.uid + "\n");
+    
+    name = mochi_json.name.split(" ", 1);
+    
+    myUser = new User({ 
+      'email': mochi_json.email,
+      'firstname': name[0],
+      'lastname': name[1],
+      'date_added': new Date().getTime(),   // Date_added is now.
+      'active': '1' // All Mochi users are active unless deactivated by Mailchimp
       });
 
   myUser.save(function (err) {
-      if (!err) callback('Success!');
+      if (!err) {
+         callback('Success!');
+     }
+     else {
+         // Handle errors
+        callback('Error: ' + err);
+     }
   });
 };
 

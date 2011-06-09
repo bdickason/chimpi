@@ -51,6 +51,7 @@ function getRequest(options, callback)
 	});
 
 	_req.write('data\n');
+	_req.write('data\n');
 	_req.end();
 }
 
