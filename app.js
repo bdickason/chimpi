@@ -26,22 +26,28 @@ app.post('/users/add', function(req, res) {
     }
 });
 */
-/* Show a specific user by ID
-app.get('/users/:id?', function(req, res, next){
-    var id = req.params.id;
-    if (id) {
-        res.send('Showing user with ID: ' + id);
-    } else {
-        next();
-    }
-}); 
 
-*/
 // Show all users
 app.get('/users', function(req, res){
 	Mochi.getUsers(function(json) {
 		res.send(json);
 	});
+});
+
+// Show a specific user by ID
+app.get('/users/:uid?', function(req, res, next){
+    var uid = req.params.uid;
+    if (uid) {
+		Mochi.getUserByUid(uid, function(json) {
+			res.send(json);
+		});
+    } else {
+		// Display error msg and show all users
+        
+    }
 }); 
+
+
+
 
 app.listen(3000);
