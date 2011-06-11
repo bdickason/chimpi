@@ -1,6 +1,6 @@
 // Mochi - Handles all connectivity to the Mochi API
 
-var cfg = require('../config/chimpi.js');    // contains API keys, etc.
+var cfg = require('../config/config.js');    // contains API keys, etc.
 var http = require('http');
 
 Mochi = function(){};

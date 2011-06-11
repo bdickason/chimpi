@@ -1,7 +1,7 @@
 // Mailchimp - Handles all connectivity to Mochi API
 
 var http = require('http');
-var cfg = require('../config/chimpi.js');    // contains API keys, etc.
+var cfg = require('../config/config.js');    // contains API keys, etc.
 
 Mailchimp = function(){};
 
