@@ -45,19 +45,13 @@ app.get('/users/email/:email?', function(req, res) {
 
 
 // Add a user to Chimpi from Mochi
-app.get('/users/add/:uid?', function(req, res) {
-    var uid = req.params.uid;
-    if(uid) {
-        Mochi.getUserByUid(uid, function(mochi_json) {
+app.get('/users/add?', function(req, res) {
+//    var uid = req.params.uid;
+        Mochi.getUsers(function(mochi_json) {
             Users.add(mochi_json, function(json) {
                 res.send(json);
-            }); 
+            });
         });
-        
-    }
-    else {
-        res.send("Please enter a valid Mochi ID (e.g. '1')");
-    }
 });
 
 // Check if Mochi users are in the DB

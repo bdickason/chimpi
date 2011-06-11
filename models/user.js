@@ -54,27 +54,44 @@ Users.prototype.findByEmail = function (email, callback) {
 // take mochi user json and stick it into mongo
 Users.prototype.add = function (mochi_json, callback) {
     // Split first + last names, only go once to prevent:  [Nick, Van, Dusseldorfer]
-    console.log(mochi_json.uid + "\n");
+    _json = JSON.parse(mochi_json);
     
-    name = mochi_json.name.split(" ", 1);
+    var errors = ""
     
-    myUser = new User({ 
-      'email': mochi_json.email,
-      'firstname': name[0],
-      'lastname': name[1],
-      'date_added': new Date().getTime(),   // Date_added is now.
-      'active': '1' // All Mochi users are active unless deactivated by Mailchimp
-      });
+    for(i=0; i < _json.length; i++) {
+        user = _json[i];
+    
+        name = user.name.split(" ", 1); // Separate first/last names
+   
 
-  myUser.save(function (err) {
-      if (!err) {
-         callback('Success!');
-     }
-     else {
-         // Handle errors
-        callback('Error: ' + err);
-     }
-  });
+        myUser = new User({ 
+            'mochi_uid': user.uid, 
+            'email': user.email,
+            'firstname': name[0],
+            'lastname': name[1],
+            'date_added': new Date().getTime(),   // Date_added is now.
+            'active': '1' // All Mochi users are active unless deactivated by Mailchimp
+            });
+        
+        myUser.save(function (err) {
+            console.log("Saving: " + myUser.firstname + "\n");
+            
+            if (!err) {
+               errors += "Success! Added: " + name[0] + " " + name[1] + "\n";
+             //  console.log(errors);
+           }
+           else {
+               // Handle errors
+              errors += "Error! Couldn't add: " + name[0] + " " + name[1] + " " + err + "\n";
+             // console.log(errors);                  
+           }
+        }); 
+    
+      }
+      
+//      console.log(errors);
+//      callback(errors);
+           
 };
 
 // Check if each user in JSON is in DB
