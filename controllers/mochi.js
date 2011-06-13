@@ -16,7 +16,7 @@ var options = {
 Mochi.prototype.getUsers = function (callback) {
 	
 	var _options = clone(options); // local copy of options
-	_options.path += "&action=list&num=5";	// List 20 users
+	_options.path += "&action=list&num=100";	// List 20 users
 	
 	getRequest(_options, callback);
 }
@@ -31,18 +31,29 @@ Mochi.prototype.getUserByUid = function (uid, callback) {
 
 function getRequest(options, callback)
 {
+    var tmp = "";
 	var _req = http.request(options, function(res) {
 	  console.log('STATUS: ' + res.statusCode);
 	  console.log('HEADERS: ' + JSON.stringify(res.headers));
 	  res.setEncoding('utf8');
 	  
+
+	  
 	  res.on('data', function (chunk) {
-		console.log(chunk);
-	    callback(chunk);
+		console.log(tmp);
+		tmp += chunk;
+	    // callback(chunk);
 	
 		// Check for chunk to be complete
 		
 	  });
+	  
+	  res.on('end', function(e) {
+             console.log("reached the end");
+             console.log(tmp);
+             callback(tmp);
+
+         });
       
   	});
 
@@ -50,6 +61,8 @@ function getRequest(options, callback)
 	  console.log('problem with request: ' + e.message);
 	});
 
+   
+    
 	_req.write('data\n');
 	_req.write('data\n');
 	_req.end();
