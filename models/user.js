@@ -56,7 +56,7 @@ Users.prototype.add = function (mochi_json, callback) {
     // Split first + last names, only go once to prevent:  [Nick, Van, Dusseldorfer]
     _json = JSON.parse(mochi_json);
     
-    var errors = ""
+    errors = ""
     
     _json.forEach(function(user) {
         
@@ -73,22 +73,20 @@ Users.prototype.add = function (mochi_json, callback) {
             });
         
         myUser.save(function (err) {
-            console.log("Saving: " + myUser.firstname + + " " + myUser.lastname + "\n");
+            console.log("Saving: " + myUser.firstname + " " + myUser.lastname + "\n");
             
             if (!err) {
-               errors += "Success! Added: " + myUser.firstname + " " + myUser.lastname + "\n";
+               console.log("Success! Added: " + myUser.firstname + " " + myUser.lastname + "\n");
+               
            }
            else {
                // Handle errors
-               errors += "Error! Couldn't add: " + myUser.firstname + " " + myUser.lastname + " " + err + "\n";              
+               console.log("Error! Couldn't add: " + myUser.firstname + " " + myUser.lastname + " " + err + "\n");
            }
-        }); 
-    
+        });     
       });
-      
-
-      callback(errors);
-           
+        
+        callback(errors);           
 };
 
 // Check if each user in JSON is in DB
