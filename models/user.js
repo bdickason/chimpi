@@ -58,13 +58,12 @@ Users.prototype.add = function (mochi_json, callback) {
     
     var errors = ""
     
-    for(i=0; i < _json.length; i++) {
-        user = _json[i];
-    
-        name = user.name.split(" ", 1); // Separate first/last names
+    _json.forEach(function(user) {
+        
+        name = user.name.split(" ", 2); // Separate first/last names
+        console.log(name[0] + " " + name[1]);
    
-
-        myUser = new User({ 
+        var myUser = new User({ 
             'mochi_uid': user.uid, 
             'email': user.email,
             'firstname': name[0],
@@ -74,23 +73,21 @@ Users.prototype.add = function (mochi_json, callback) {
             });
         
         myUser.save(function (err) {
-            console.log("Saving: " + myUser.firstname + "\n");
+            console.log("Saving: " + myUser.firstname + + " " + myUser.lastname + "\n");
             
             if (!err) {
-               errors += "Success! Added: " + name[0] + " " + name[1] + "\n";
-             //  console.log(errors);
+               errors += "Success! Added: " + myUser.firstname + " " + myUser.lastname + "\n";
            }
            else {
                // Handle errors
-              errors += "Error! Couldn't add: " + name[0] + " " + name[1] + " " + err + "\n";
-             // console.log(errors);                  
+               errors += "Error! Couldn't add: " + myUser.firstname + " " + myUser.lastname + " " + err + "\n";              
            }
         }); 
     
-      }
+      });
       
-//      console.log(errors);
-//      callback(errors);
+
+      callback(errors);
            
 };
 
