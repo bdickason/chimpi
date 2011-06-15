@@ -94,18 +94,19 @@ app.get('/users/mochi/:uid?', function(req, res, next) {
 
 /* MAILCHIMP */
 
-// Show all Mailchimp users
-app.get('/users/mailchimp', function(req, res) {
-	Mailchimp.getUsers(function(json) {
+// Show all Mailchimp lists
+app.get('/mailchimp/lists', function(req, res) {
+	Mailchimp.getLists(function(json) {
 		res.send(json);
+        // res.render('lists.jade', json);
 	});
 });
 
-// Show a specific Mailchimp user by ID
-app.get('/users/mailchimp/:uid?', function(req, res, next) {
-    var uid = req.params.uid;
-    if (uid) {
-		Mailchimp.getUserByUid(uid, function(json) {
+// Show all Mailchimp users from a specific list
+app.get('/users/mailchimp/:id?', function(req, res, next) {
+    var id = req.params.id;
+    if (id) {
+		Mailchimp.getUsers(id, function(json) {
 			res.send(json);
 		});
     } else {
@@ -113,8 +114,5 @@ app.get('/users/mailchimp/:uid?', function(req, res, next) {
         
     }
 });
-
-// Show all Mailchimp users
-app.get('')
 
 app.listen(3000);
