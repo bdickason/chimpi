@@ -56,12 +56,11 @@ Users.prototype.add = function (mochi_json, callback) {
     // Split first + last names, only go once to prevent:  [Nick, Van, Dusseldorfer]
     _json = JSON.parse(mochi_json);
     
-    errors = ""
+    var errors = "";
     
     _json.forEach(function(user) {
         
         name = user.name.split(" ", 2); // Separate first/last names
-        console.log(name[0] + " " + name[1]);
    
         var myUser = new User({ 
             'mochi_uid': user.uid, 
@@ -73,19 +72,19 @@ Users.prototype.add = function (mochi_json, callback) {
             });
         
         myUser.save(function (err) {
-            console.log("Saving: " + myUser.firstname + " " + myUser.lastname + "\n");
+                errors += "Saving: " + myUser.firstname + " " + myUser.lastname + "\n";
             
             if (!err) {
-               console.log("Success! Added: " + myUser.firstname + " " + myUser.lastname + "\n");
+                errors += "Success! Added: " + myUser.firstname + " " + myUser.lastname + "\n";
                
            }
            else {
                // Handle errors
-               console.log("Error! Couldn't add: " + myUser.firstname + " " + myUser.lastname + " " + err + "\n");
+               errors += "Error! Couldn't add: " + myUser.firstname + " " + myUser.lastname + " " + err + "\n";
            }
         });     
       });
-        
+        console.log(errors);
         callback(errors);           
 };
 

@@ -46,11 +46,7 @@ app.get('/users/email/:email?', function(req, res) {
 
 // Add a user to Chimpi from Mochi
 app.get('/users/add?', function(req, res) {
-//    var uid = req.params.uid;
         Mochi.getUsers(function(mochi_json) {
-            
-            // Insert JSon Parsing logic here?
-            
             Users.add(mochi_json, function(json) {
                 res.send(json);
             });

@@ -16,7 +16,7 @@ var options = {
 Mochi.prototype.getUsers = function (callback) {
 	
 	var _options = clone(options); // local copy of options
-	_options.path += "&action=list&num=20";	// List 20 users
+	_options.path += "&action=list&num=5000";	// List all users
 	
 	getRequest(_options, callback);
 }
