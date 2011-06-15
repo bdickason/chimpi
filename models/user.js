@@ -54,7 +54,7 @@ Users.prototype.findByEmail = function (email, callback) {
 // take mochi user json and stick it into mongo
 Users.prototype.add = function (mochi_json, callback) {
     // Split first + last names, only go once to prevent:  [Nick, Van, Dusseldorfer]
-    _json = JSON.parse(mochi_json);
+    var _json = JSON.parse(mochi_json);
     
     var errors = "";
     
@@ -82,7 +82,10 @@ Users.prototype.add = function (mochi_json, callback) {
                // Handle errors
                errors += "Error! Couldn't add: " + myUser.firstname + " " + myUser.lastname + " " + err + "\n";
            }
+
         });     
+
+	
       });
         console.log(errors);
         callback(errors);           
