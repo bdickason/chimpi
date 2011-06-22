@@ -29,7 +29,8 @@ app.get('/', function(req, res) {
 // Show all Chimpi users
 app.get('/users', function(req, res) {
 	Users.getUsers(function(json) {
-		res.send(json);
+	    action = "Showing all Chimpi users.";
+		res.render('users.jade', { json: json, action: action });
 	});
 });
 
@@ -37,8 +38,9 @@ app.get('/users', function(req, res) {
 app.get('/users/email/:email?', function(req, res) {
     var email = req.params.email;
     if(email) {
-    	Users.findByEmail(req.params.email, function(json) {
-    		res.send(json);
+    	Users.findByEmail(email, function(json) {
+    		action = "Showing user: " + email;
+    		res.render('users/singleuser.jade', { json: json, action: action });
     	});
 	}
 });
@@ -74,8 +76,8 @@ app.get('/compare', function(req, res) {
 // Show all Mochi users
 app.get('/users/mochi', function(req, res) {
 	Mochi.getUsers(function(json) {
-		res.write(json);
-		res.end();
+	    action = "Showing all Mochi users."
+		res.render('users.jade', { json: json, action: action });
 	});
 });
 

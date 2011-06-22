@@ -1,1 +1,5 @@
-h1= pageTitle
+h1= action
+ul
+- each user in json
+    li.user 
+        a(href='/users/email/#{user.email}') #{user.firstname} #{user.lastname}

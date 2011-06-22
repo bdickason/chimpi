@@ -58,34 +58,38 @@ Users.prototype.add = function (mochi_json, callback) {
     
     var errors = "";
     
-    _json.forEach(function(user) {
+    _json.forEach(function(user) {        
+            if(user.name && user.name != "Type a client name...") {
+                // Check for valid json object + some temporary name validation
         
-        name = user.name.split(" ", 2); // Separate first/last names
+                console.log("Name: " + user.name)
+        
+                name = user.name.split(" ", 2); // Separate first/last names
    
-        var myUser = new User({ 
-            'mochi_uid': user.uid, 
-            'email': user.email,
-            'firstname': name[0],
-            'lastname': name[1],
-            'date_added': new Date().getTime(),   // Date_added is now.
-            'active': '1' // All Mochi users are active unless deactivated by Mailchimp
-            });
+                var myUser = new User({ 
+                    'mochi_uid': user.uid, 
+                    'email': user.email,
+                    'firstname': name[0],
+                    'lastname': name[1],
+                    'date_added': new Date().getTime(),   // Date_added is now.
+                    'active': '1' // All Mochi users are active unless deactivated by Mailchimp
+                    });
         
-        myUser.save(function (err) {
-                errors += "Saving: " + myUser.firstname + " " + myUser.lastname + "\n";
+                myUser.save(function (err) {
+                        errors += "Saving: " + myUser.firstname + " " + myUser.lastname + "\n";
             
-            if (!err) {
-                errors += "Success! Added: " + myUser.firstname + " " + myUser.lastname + "\n";
+                    if (!err) {
+                        errors += "Success! Added: " + myUser.firstname + " " + myUser.lastname + "\n";
                
-           }
-           else {
-               // Handle errors
-               errors += "Error! Couldn't add: " + myUser.firstname + " " + myUser.lastname + " " + err + "\n";
-           }
+                   }
+                   else {
+                       // Handle errors
+                       errors += "Error! Couldn't add: " + myUser.firstname + " " + myUser.lastname + " " + err + "\n";
+                   }
+            
+        });   
 
-        });     
-
-	
+        }
       });
         console.log(errors);
         callback(errors);           

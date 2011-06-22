@@ -32,16 +32,17 @@ Mochi.prototype.getUserByUid = function (uid, callback) {
 function getRequest(options, callback)
 {
     var tmp = "";
+    
 	var _req = http.request(options, function(res) {
-	  console.log('STATUS: ' + res.statusCode);
-	  console.log('HEADERS: ' + JSON.stringify(res.headers));
+//	  console.log('STATUS: ' + res.statusCode);
+//	  console.log('HEADERS: ' + JSON.stringify(res.headers));
 	  res.setEncoding('utf8');
 	  
 
 	  
 	  res.on('data', function (chunk) {
-		console.log(tmp);
 		tmp += chunk;
+		
 	    // callback(chunk);
 	
 		// Check for chunk to be complete
@@ -49,8 +50,6 @@ function getRequest(options, callback)
 	  });
 	  
 	  res.on('end', function(e) {
-             console.log("reached the end");
-             console.log(tmp);
              callback(tmp);
 
          });

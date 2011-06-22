@@ -1,0 +1,5 @@
+a(href='/users/') < All Users
+ul
+- each user in json
+    li.user 
+        #{user.firstname} #{user.lastname} - #{user.email}
